@@ -6,15 +6,15 @@ SpriteIconMorph.prototype.userMenu = function () {
     menu.addLine();
     var myself = this;
     menu.addItem(
-            'connect to Arduino',
-            function () { 
-                myself.object.arduino.attemptConnection();
-            });
+        'connect to Arduino',
+        function () {
+            myself.object.arduino.attemptConnection();
+        });
     menu.addItem(
-            'disconnect Arduino',
-            function () {
-                myself.object.arduino.disconnect();
-            });
+        'disconnect Arduino',
+        function () {
+            myself.object.arduino.disconnect();
+        });
     return menu;
 };
 
@@ -30,9 +30,9 @@ IDE_Morph.prototype.snapMenu = function () {
     menu.addLine();
     menu.addItem('About Snap4Arduino...', 'aboutSnap4Arduino');
     menu.addLine();
-    menu.addItem('Snap4Arduino website', 
-        function() {
-            window.open('http://snap4arduino.rocks', 'Snap4ArduinoWebsite'); 
+    menu.addItem('Snap4Arduino website',
+        function () {
+            window.open('http://snap4arduino.rocks', 'Snap4ArduinoWebsite');
         }
     );
     menu.addItem('Snap4Arduino repository',
@@ -56,8 +56,8 @@ IDE_Morph.prototype.settingsMenu = function () {
         // http server option
         menu.addItem(
             (this.isServerOn ? '\u2611 ' : '\u2610 ') + localize('HTTP server'),
-                'toggleServer',
-                this.isServerOn ? 'uncheck to stop\nHTTP server' : 'check to start\nHTTP server, allowing\nremote control\nof Snap4Arduino'
+            'toggleServer',
+            this.isServerOn ? 'uncheck to stop\nHTTP server' : 'check to start\nHTTP server, allowing\nremote control\nof Snap4Arduino'
         );
         if (this.isServerOn) {
             menu.addItem(
@@ -89,24 +89,24 @@ IDE_Morph.prototype.settingsMenu = function () {
         stButton = iframe.contentWindow.document.getElementById('UNO_FirmataSt'),
         firmwaresMenu = function () {
             var menu = new MenuMorph(this, "Firmwares");
-            menu.addItem('FirmataSA5 tone (recomended)', function() {toneButton.click()});
-            menu.addItem('FirmataSA5 ir', function() {irButton.click()});
-            menu.addItem('Firmata neopixel', function() {npButton.click()});
-            menu.addItem('Firmata Standard', function() {stButton.click()});
+            menu.addItem('FirmataSA5 tone (recomended)', function () { toneButton.click() });
+            menu.addItem('FirmataSA5 ir', function () { irButton.click() });
+            menu.addItem('Firmata neopixel', function () { npButton.click() });
+            menu.addItem('Firmata Standard', function () { stButton.click() });
             return menu;
         };
 
     menu.addLine();
     menu.addMenu('Upload firmware on UNO boards', firmwaresMenu());
-    menu.addItem('More supported devices', 
-        function() {
-            window.open('https://snap4arduino.rocks/#devices', 'Snap4ArduinoWebsite'); 
-    });
+    menu.addItem('More supported devices',
+        function () {
+            window.open('https://snap4arduino.rocks/#devices', 'Snap4ArduinoWebsite');
+        });
     if (typeof process !== 'object') {
         menu.addItem('Snap4Arduino connector required',
-            function() {
+            function () {
                 window.open('https://snap4arduino.rocks/#install', 'Snap4ArduinoWebsite');
-        });
+            });
     }
     menu.popup(this.world(), pos);
 };
@@ -124,17 +124,17 @@ IDE_Morph.prototype.projectMenu = function () {
     menu.addItem('Save, share and get URL...', 'saveAndShare');
     menu.addLine();
     menu.addItem(
-        'New Arduino translatable project', 
+        'New Arduino translatable project',
         'createNewArduinoProject',
         'Experimental feature!\nScripts written under this\n'
-            + 'mode will be translatable\nas Arduino sketches'
+        + 'mode will be translatable\nas Arduino sketches'
     );
     menu.addLine();
     menu.addItem(
-        'Start a Snap Jr. session', 
+        'Start a Snap Jr. session',
         'startSnapJr',
         'Start Snap4Arduino in an\nicon-based blocks mode\n'
-            + 'for the youngest programmers'
+        + 'for the youngest programmers'
     );
 
     menu.popup(this.world(), pos);
@@ -171,14 +171,14 @@ IDE_Morph.prototype.fileImport = function () {
     inp.style.width = "0px";
     inp.style.height = "0px";
     inp.addEventListener(
-            "change",
-            function () {
-                document.body.removeChild(inp);
-                myself.filePicker = null;
-                world.hand.processDrop(inp.files);
-            },
-            false
-            );
+        "change",
+        function () {
+            document.body.removeChild(inp);
+            myself.filePicker = null;
+            world.hand.processDrop(inp.files);
+        },
+        false
+    );
     document.body.appendChild(inp);
     this.filePicker = inp;
     inp.click();
@@ -262,7 +262,7 @@ IDE_Morph.prototype.aboutSnap = function () {
     for (module in modules) {
         if (Object.prototype.hasOwnProperty.call(modules, module)) {
             versions += ('\n' + module + ' (' +
-                            modules[module] + ')');
+                modules[module] + ')');
         }
     }
     if (versions !== '') {
@@ -276,17 +276,17 @@ IDE_Morph.prototype.aboutSnap = function () {
 
     function txt(textString) {
         var tm = new TextMorph(
-                textString,
-                dlg.fontSize,
-                dlg.fontStyle,
-                true,
-                false,
-                'center',
-                null,
-                null,
-                MorphicPreferences.isFlat ? null : new Point(1, 1),
-                WHITE
-            ),
+            textString,
+            dlg.fontSize,
+            dlg.fontStyle,
+            true,
+            false,
+            'center',
+            null,
+            null,
+            MorphicPreferences.isFlat ? null : new Point(1, 1),
+            WHITE
+        ),
             scroller,
             maxHeight = world.height() - dlg.titleFontSize * 10;
         if (tm.height() > maxHeight) {
@@ -386,24 +386,24 @@ IDE_Morph.prototype.aboutSnap = function () {
 
 IDE_Morph.prototype.aboutSnap4Arduino = function () {
     var dlg, aboutTxt, creditsTxt, translations,
-    module, aboutBtn, creditsBtn,
-    world = this.world();
+        module, aboutBtn, creditsBtn,
+        world = this.world();
 
     dlg = new DialogBoxMorph();
 
     function txt(textString) {
         var tm = new TextMorph(
-                textString,
-                dlg.fontSize,
-                dlg.fontStyle,
-                true,
-                false,
-                'center',
-                null,
-                null,
-                MorphicPreferences.isFlat ? null : new Point(1, 1),
-                WHITE
-            ),
+            textString,
+            dlg.fontSize,
+            dlg.fontStyle,
+            true,
+            false,
+            'center',
+            null,
+            null,
+            MorphicPreferences.isFlat ? null : new Point(1, 1),
+            WHITE
+        ),
             scroller,
             maxHeight = world.height() - dlg.titleFontSize * 10;
         if (tm.height() > maxHeight) {
@@ -420,25 +420,25 @@ IDE_Morph.prototype.aboutSnap4Arduino = function () {
     }
 
     this.getURL('version', function (version) {
-        
-        aboutTxt = 'Snap4Arduino ' + version +'\n'
-        + 'http://snap4arduino.rocks\n\n'
 
-        + 'Copyright \u24B8 2018-2023 Joan Guillén and Bernat Romagosa\n'
-        + 'https://github.com/bromagosa/snap4arduino\n\n'
+        aboutTxt = 'Snap4Arduino ' + version + '\n'
+            + 'http://snap4arduino.rocks\n\n'
 
-        + 'Copyright \u24B8 2016-2017 Bernat Romagosa and Arduino.org\n\n'
+            + 'Copyright \u24B8 2018-2023 Joan Guillén and Bernat Romagosa\n'
+            + 'https://github.com/bromagosa/snap4arduino\n\n'
 
-        + 'Copyright \u24B8 2015 Bernat Romagosa and Citilab\n'
-        + 'edutec@citilab.eu\n\n'
+            + 'Copyright \u24B8 2016-2017 Bernat Romagosa and Arduino.org\n\n'
 
-        + 'Snap4Arduino is a modification of Snap! originally developed\n'
-        + 'by the Edutec research group at the Citilab, Cornellà de\n'
-        + 'Llobregat (Barcelona).'
+            + 'Copyright \u24B8 2015 Bernat Romagosa and Citilab\n'
+            + 'edutec@citilab.eu\n\n'
+
+            + 'Snap4Arduino is a modification of Snap! originally developed\n'
+            + 'by the Edutec research group at the Citilab, Cornellà de\n'
+            + 'Llobregat (Barcelona).'
 
         dlg.inform('About Snap4Arduino', aboutTxt, world, this.logo.cachedTexture);
     });
-    
+
     creditsTxt = localize('Contributors')
         + '\n\nErnesto Laval: MacOSX version, architectural decisions,\n'
         + 'several features and bugfixes, Spanish translation\n'
@@ -527,74 +527,156 @@ IDE_Morph.prototype.createLogo = function () {
     // this.logo.texture = this.logoURL; // original code, commented out
     this.logo.texture = 's4a_logo_sm.png'; // Overriden for Snap4Arduino
     this.snapLogo = new Image();
-    this.snapLogo.src = "data:image/png;base64," +
-        "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" +
-        "gg=="; 
+    this.snapLogo.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA" + 
+    "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";
 
     this.logo.render = function (ctx) {
         var gradient = ctx.createLinearGradient(
-                0,
-                0,
-                this.width(),
-                0
-            );
+            0,
+            0,
+            this.width(),
+            0
+        );
         gradient.addColorStop(0, 'black');
         gradient.addColorStop(0.5, myself.frameColor.toString());
         ctx.fillStyle = MorphicPreferences.isFlat ?
-                myself.frameColor.toString() : gradient;
+            myself.frameColor.toString() : gradient;
         ctx.fillRect(0, 0, this.width(), this.height());
         if (this.cachedTexture) {
             this.renderCachedTexture(ctx);
@@ -630,10 +712,10 @@ function homePath() {
  */
 
 IDE_Morph.prototype.originalSetLanguage = IDE_Morph.prototype.setLanguage;
-IDE_Morph.prototype.setLanguage = function(lang, callback) {
+IDE_Morph.prototype.setLanguage = function (lang, callback) {
     var myself = this;
 
-    myself.originalSetLanguage(lang, function() {
+    myself.originalSetLanguage(lang, function () {
         myself.setLanguageS4A(lang, callback);
     });
 };
@@ -655,7 +737,7 @@ IDE_Morph.prototype.setLanguageS4A = function (lang, callback) {
         myself.reflectLanguage(lang, callback);
     };
     document.head.appendChild(s4aTranslation);
-    s4aTranslation.src = s4aSrc; 
+    s4aTranslation.src = s4aSrc;
 };
 
 // Fix problme with connected board when creating a new project 
@@ -664,7 +746,7 @@ IDE_Morph.prototype.originalNewProject = IDE_Morph.prototype.newProject
 IDE_Morph.prototype.newProject = function () {
     // Disconnect each sprite before creating the new project
     var sprites = this.sprites.asArray()
-    sprites.forEach(function(sprite) {
+    sprites.forEach(function (sprite) {
         if (sprite.arduino && sprite.arduino.board) {
             sprite.arduino.disconnect(true);
         }
@@ -674,18 +756,18 @@ IDE_Morph.prototype.newProject = function () {
 
 IDE_Morph.prototype.pushProject = function () {
     var projectContents = this.serializer.serialize(this.stage),
-    myself = this;
+        myself = this;
 
     new DialogBoxMorph(
-            null,
-            function (url) {
-                myself.doPushProject(projectContents, url);
-            }
+        null,
+        function (url) {
+            myself.doPushProject(projectContents, url);
+        }
     ).withKey('pushProject').prompt(
         'Push project',
         document.location.hostname + ':8080',
         this.world()
-        );
+    );
 };
 
 IDE_Morph.prototype.doPushProject = function (contents, url) {
@@ -699,12 +781,12 @@ IDE_Morph.prototype.doPushProject = function (contents, url) {
     http.onreadystatechange = function () {
         if (http.readyState === 4 && http.status === 200) {
             myself.inform(
-                    'Done',
-                    http.responseText);
+                'Done',
+                http.responseText);
         } else if (http.readyState === 4 && status !== 200) {
             myself.inform(
-                    'Error',
-                    http.responseText);
+                'Error',
+                http.responseText);
         }
     };
 
@@ -713,7 +795,7 @@ IDE_Morph.prototype.doPushProject = function (contents, url) {
 
 IDE_Morph.prototype.openFromUrl = function () {
     this.prompt('Enter project URL', function (url) {
-        window.location.href = '#' + url.replace(/.*#/g,'') + '&editMode';
+        window.location.href = '#' + url.replace(/.*#/g, '') + '&editMode';
         window.onbeforeunload = nop;
         window.location.reload();
     });
@@ -724,11 +806,11 @@ IDE_Morph.prototype.saveAndShare = function () {
 
     if (!this.projectName) {
         myself.prompt(
-                'Please enter a name for your project', 
-                function (name) { 
-                    myself.projectName = name;
-                    myself.doSaveAndShare();
-                });
+            'Please enter a name for your project',
+            function (name) {
+                myself.projectName = name;
+                myself.doSaveAndShare();
+            });
     } else {
         this.doSaveAndShare();
     }
@@ -761,7 +843,7 @@ IDE_Morph.prototype.doSaveAndShare = function () {
 
 IDE_Morph.prototype.showProjectUrl = function (projectName) {
     var info = new DialogBoxMorph(),
-        label = localize('This project is now public at the following URL:'), 
+        label = localize('This project is now public at the following URL:'),
         txt = new InputFieldMorph(
             this.cloud.urlForMyProject(projectName),
             false, // no numeric
@@ -769,7 +851,7 @@ IDE_Morph.prototype.showProjectUrl = function (projectName) {
             false // readOnly, to get a selected text
         );
     info.labelString = label;
-    txt.setWidth(Math.max(txt.contents().text.text.length*6,label.length*8));
+    txt.setWidth(Math.max(txt.contents().text.text.length * 6, label.length * 8));
     info.createLabel();
     info.addBody(txt);
     info.addButton('ok', 'OK');
@@ -800,7 +882,7 @@ IDE_Morph.prototype.createNewArduinoProject = function () {
         function () { myself.newArduinoProject(); });
 };
 
-IDE_Morph.prototype.newArduinoProject = function() {
+IDE_Morph.prototype.newArduinoProject = function () {
     var myself = this;
 
     this.newProject();
@@ -836,14 +918,14 @@ IDE_Morph.prototype.newArduinoProject = function() {
 
     // toggle unusable blocks
     var defs = SpriteMorph.prototype.blocks;
-   
-    SpriteMorph.prototype.categories.forEach(function (category) { 
+
+    SpriteMorph.prototype.categories.forEach(function (category) {
         Object.keys(defs).forEach(function (selector) {
             if (!defs[selector].transpilable) {
                 StageMorph.prototype.hiddenPrimitives[selector] = true;
             }
         });
-        myself.flushBlocksCache(category) 
+        myself.flushBlocksCache(category)
     });
 
     // hide empty categories
@@ -873,25 +955,25 @@ IDE_Morph.prototype.newArduinoProject = function() {
 IDE_Morph.prototype.createNewProject = function () {
     var myself = this;
     this.confirm(
-            'Replace the current project with a new one?',
-            'New Project',
-            function () {
-                if (myself.isArduinoTranslationMode) {
-                    StageMorph.prototype.blockTemplates = StageMorph.prototype.notSoOriginalBlockTemplates;
-                    SpriteMorph.prototype.blockTemplates = SpriteMorph.prototype.notSoOriginalBlockTemplates;
-                    myself.isArduinoTranslationMode = false;
-                    // show all categories
-                    
-                    myself.categories.children.forEach(function (each) {
-                        each.setPosition(each.originalPosition);
-                        each.show();
-                    });
-                    
-                    myself.categories.setHeight(myself.categories.height() + 30);
-                }
-                myself.newProject();
+        'Replace the current project with a new one?',
+        'New Project',
+        function () {
+            if (myself.isArduinoTranslationMode) {
+                StageMorph.prototype.blockTemplates = StageMorph.prototype.notSoOriginalBlockTemplates;
+                SpriteMorph.prototype.blockTemplates = SpriteMorph.prototype.notSoOriginalBlockTemplates;
+                myself.isArduinoTranslationMode = false;
+                // show all categories
+
+                myself.categories.children.forEach(function (each) {
+                    each.setPosition(each.originalPosition);
+                    each.show();
+                });
+
+                myself.categories.setHeight(myself.categories.height() + 30);
             }
-            );
+            myself.newProject();
+        }
+    );
 };
 
 IDE_Morph.prototype.sn4a_version = function () {
@@ -1054,7 +1136,7 @@ IDE_Morph.prototype.createCategories = function () {
             button.setPosition(new Point(
                 l + (col * xPadding + ((col - 1) * buttonWidth)),
                 t + ((row + 1) * yPadding + (row * buttonHeight) + border) +
-                    (i > 9 ? border + 2 : 0) // 7 -> 9
+                (i > 9 ? border + 2 : 0) // 7 -> 9
             ));
         });
         // Scroller from 6 (5 in Snap!) because Snap4Arduino
@@ -1076,18 +1158,18 @@ IDE_Morph.prototype.createCategories = function () {
             myself.categories.add(scroller);
             myself.categories.setHeight(
                 (5 + 1) * yPadding // 4 -> 5
-                    + 5 * buttonHeight // 4 -> 5
-                    + 5 * (yPadding + buttonHeight) + border + 2 // 6->5
-                    + 2 * border
+                + 5 * buttonHeight // 4 -> 5
+                + 5 * (yPadding + buttonHeight) + border + 2 // 6->5
+                + 2 * border
             );
         } else {
             myself.categories.setHeight(
                 (5 + 1) * yPadding // 4 -> 5
-                    + 5 * buttonHeight // 4 -> 5
-                    + (more ?
-                        (more * (yPadding + buttonHeight) + border + 2)
-                            : 0)
-                    + 2 * border
+                + 5 * buttonHeight // 4 -> 5
+                + (more ?
+                    (more * (yPadding + buttonHeight) + border + 2)
+                    : 0)
+                + 2 * border
             );
         }
     }
@@ -1161,14 +1243,15 @@ IDE_Morph.prototype.scrollPaletteToCategory = function (category) {
         palette = this.palette;
     }
     firstInCategory = palette.contents.children.find(
-        (block) => {return block.category === category &&
-                           block.selector != 'doWarp' &&
-                           block.selector != 'doDeclareVariables' &&
-                           !(block instanceof RingMorph);
-    });
-    if (firstInCategory === undefined) {return; }
+        (block) => {
+            return block.category === category &&
+                block.selector != 'doWarp' &&
+                block.selector != 'doDeclareVariables' &&
+                !(block instanceof RingMorph);
+        });
+    if (firstInCategory === undefined) { return; }
     delta = palette.top() - firstInCategory.top() + palette.padding;
-    if (delta === 0) {return; }
+    if (delta === 0) { return; }
     this.world().animations.push(new Animation(
         y => { // setter
             palette.contents.setTop(y);
@@ -1190,7 +1273,7 @@ IDE_Morph.prototype.topVisibleCategoryInPalette = function () {
     // block category in the palette, so it can be indicated
     // as "current category" in the category selection buttons
     var top;
-    if (!this.palette) {return; }
+    if (!this.palette) { return; }
     top = this.palette.contents.children.find(morph =>
         morph.category && morph.bounds.intersects(this.palette.bounds)
     );
@@ -1236,8 +1319,8 @@ IDE_Morph.prototype.snap4arduinoTitle = function () {
 };
 IDE_Morph.prototype.original_setProjectName = IDE_Morph.prototype.setProjectName;
 IDE_Morph.prototype.setProjectName = function (string) {
-   this.original_setProjectName (string);
-   this.snap4arduinoTitle();
+    this.original_setProjectName(string);
+    this.snap4arduinoTitle();
 };
 IDE_Morph.prototype.original_setProjectNotes = IDE_Morph.prototype.setProjectNotes;
 IDE_Morph.prototype.setProjectNotes = function (string) {
