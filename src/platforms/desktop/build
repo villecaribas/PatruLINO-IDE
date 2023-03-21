@@ -43,6 +43,8 @@ environments/node_modules/nw-builder/bin/nwbuild -p $platform tmp -o releases/de
 # ===> We implement a workaround for the COMxx issue to continue with latest versions
 mkdir -p releases/$1
 mv releases/desktop/Snap4Arduino/$platform/* releases/$1
+mv releases/$1/Snap4Arduino.exe releases/$1/PatruLINO-IDE.exe
+
 rm -rf releases/desktop/Snap4Arduino
 
 if echo $1 | grep win; then

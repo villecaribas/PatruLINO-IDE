@@ -2,9 +2,9 @@
     "main": "index.html",
     "version": "override_me",
     "name": "Snap4Arduino",
-    "description": "Snap4Arduino",
+    "description": "PatruLINO-IDE - Ambiente Integrado de Desenvolvimento do PatrulhaEUREKA.org!!",
     "window": {
-        "title": "Snap4Arduino",
+        "title": "PatruLINO-IDE",
         "icon": "s4a/icon-128.png",
         "frame": true,
         "position": "center",
