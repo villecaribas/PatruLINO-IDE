@@ -1,0 +1,377 @@
+<blocks app="Snap! 7, https://snap.berkeley.edu" version="2">
+    <palette>
+        <category name="PatruLINO" color="224,25,0,1"/>
+    </palette>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl conectar %&apos;ip&apos;" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%s">192.168.100.86</input>
+        </inputs>
+        <script>
+            <block s="doIf">
+                <block s="reportNot">
+                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br conectado?"></custom-block>
+                </block>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list>
+                                <l>ip</l>
+                            </list>
+                            <l>window.patrulinows = (function () {&#xD;&#xD;    var url = "ws://" + ip + "/ws";&#xD;    var statusCon = false;&#xD;    var ws = statusCon ? ws : new WebSocket(url);&#xD;    var res = "";&#xD;&#xD;    ws.onopen = function (evt) {&#xD;        console.log("Conexao aberta ...");&#xD;        statusCon = true;&#xD;    };&#xD;&#xD;    ws.onmessage = function (evt) {&#xD;        console.log("Dado recebido ... :" + evt.data);&#xD;        res = evt.data;&#xD;    };&#xD;&#xD;    ws.onclose = function (evt) {&#xD;        console.log("Connection closed.");&#xD;        statusCon = false;&#xD;    };&#xD;&#xD;    return {&#xD;        //Metodos e variaveis PUBLICAS&#xD;        enviar: function (msg) {&#xD;            console.log("--&gt; " + msg);&#xD;            if (statusCon) {&#xD;                ws.send(msg);&#xD;            }&#xD;        },&#xD;&#xD;        opened: function () {&#xD;            console.log("Conexao esta: " + statusCon);&#xD;            return statusCon;&#xD;        },&#xD;&#xD;        leia: function () {&#xD;            return res;&#xD;        },&#xD;&#xD;        fechar: function () {&#xD;            statusCon = false;&#xD;            ws.close();&#xD;        }&#xD;&#xD;    };&#xD;})();&#xD;&#xD;//return window.patrulinows.opened();&#xD;</l>
+                        </block>
+                        <list>
+                            <block var="ip"/>
+                        </list>
+                    </block>
+                    <block s="doWaitUntil">
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br conectado?"></custom-block>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl conectado?" type="predicate" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doReport">
+                <block s="evaluate">
+                    <block s="reportJSFunction">
+                        <list></list>
+                        <l>if (typeof window.patrulinows === "undefined"){&#xD;    return false&#xD;}else{&#xD;    return window.patrulinows.opened()&#xD;}</l>
+                    </block>
+                    <list></list>
+                </block>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl desconectar" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doRun">
+                <block s="reportJSFunction">
+                    <list>
+                        <l></l>
+                    </list>
+                    <l>window.patrulinows.fechar()</l>
+                </block>
+                <list></list>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl enviar: %&apos;mensagem&apos;" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%s"></input>
+        </inputs>
+        <script>
+            <block s="doIfElse">
+                <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br conectado?"></custom-block>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list>
+                                <l>mensagem</l>
+                            </list>
+                            <l>window.patrulinows.enviar(mensagem)</l>
+                        </block>
+                        <list>
+                            <block var="mensagem"/>
+                        </list>
+                    </block>
+                </script>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list></list>
+                            <l>alert("PatruLINO DESCONECTATO :-(")</l>
+                        </block>
+                        <list></list>
+                    </block>
+                    <block s="doStopThis">
+                        <l>
+                            <option>all</option>
+                        </l>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl tick" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <l>alternar</l>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl tick estado" type="reporter" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <l>getState</l>
+            </custom-block>
+            <block s="doWait">
+                <l>0.2</l>
+            </block>
+            <block s="doReport">
+                <block s="evaluate">
+                    <block s="reportJSFunction">
+                        <list></list>
+                        <l>return window.patrulinows.leia()</l>
+                    </block>
+                    <list></list>
+                </block>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl led %&apos;n&apos; %&apos;s&apos;" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">1<options>1&#xD;2&#xD;3</options></input>
+            <input type="%b">true</input>
+        </inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>l</l>
+                        <block var="n"/>
+                        <block s="reportIfElse">
+                            <block var="s"/>
+                            <l>1</l>
+                            <l>0</l>
+                        </block>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl led %&apos;n&apos; pisca: %&apos;s&apos; ms" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">1<options>1&#xD;2&#xD;3</options></input>
+            <input type="%n">1000</input>
+        </inputs>
+        <script>
+            <block s="doSetVar">
+                <l>s</l>
+                <block s="reportIfElse">
+                    <block s="reportLessThanOrEquals">
+                        <block var="s"/>
+                        <l>0</l>
+                    </block>
+                    <l>0</l>
+                    <block var="s"/>
+                </block>
+            </block>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>l</l>
+                        <block var="n"/>
+                        <l>b</l>
+                        <block var="s"/>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl led %&apos;n&apos; intensidade: %&apos;i&apos; %" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">1<options>1&#xD;2&#xD;3</options></input>
+            <input type="%n">100</input>
+        </inputs>
+        <script>
+            <block s="doSetVar">
+                <l>i</l>
+                <block s="reportIfElse">
+                    <block s="reportLessThanOrEquals">
+                        <block var="i"/>
+                        <l>0</l>
+                    </block>
+                    <l>0</l>
+                    <block var="i"/>
+                </block>
+            </block>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>l</l>
+                        <block var="n"/>
+                        <l>i</l>
+                        <block var="i"/>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl servo %&apos;servo&apos; ângulo: %&apos;angulo&apos; º" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">1<options>1&#xD;2&#xD;3</options></input>
+            <input type="%n">90</input>
+        </inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>s</l>
+                        <block var="servo"/>
+                        <l>m</l>
+                        <block var="angulo"/>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl motores força: %&apos;forca&apos; % ângulo: %&apos;angulo&apos; º" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">100</input>
+            <input type="%n">90</input>
+        </inputs>
+        <script>
+            <block s="doIfElse">
+                <block s="reportOr">
+                    <block s="reportGreaterThan">
+                        <l>90</l>
+                        <block var="angulo"/>
+                    </block>
+                    <block s="reportGreaterThan">
+                        <block var="angulo"/>
+                        <l>270</l>
+                    </block>
+                </block>
+                <script>
+                    <block s="doSetVar">
+                        <l>angulo</l>
+                        <block s="reportDifference">
+                            <l>180</l>
+                            <block s="reportModulus">
+                                <block s="reportVariadicSum">
+                                    <list>
+                                        <block var="angulo"/>
+                                        <l>90</l>
+                                    </list>
+                                </block>
+                                <l>360</l>
+                            </block>
+                        </block>
+                    </block>
+                </script>
+                <script>
+                    <block s="doSetVar">
+                        <l>angulo</l>
+                        <block s="reportDifference">
+                            <l>180</l>
+                            <block s="reportModulus">
+                                <block s="reportDifference">
+                                    <block var="angulo"/>
+                                    <l>270</l>
+                                </block>
+                                <l>-360</l>
+                            </block>
+                        </block>
+                    </block>
+                </script>
+            </block>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>mf</l>
+                        <block var="forca"/>
+                        <l>:</l>
+                        <block s="reportRound">
+                            <block var="angulo"/>
+                        </block>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl motores m1: %&apos;forca1&apos; % m2: %&apos;forca2&apos; %" type="command" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">100</input>
+            <input type="%n">100</input>
+        </inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br enviar: %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>mg</l>
+                        <block var="forca1"/>
+                        <l>:</l>
+                        <block var="forca2"/>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 $nl recebido" type="reporter" category="PatruLINO">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doIfElse">
+                <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $PatruLINO-0.681 %br conectado?"></custom-block>
+                <script>
+                    <block s="doReport">
+                        <block s="evaluate">
+                            <block s="reportJSFunction">
+                                <list></list>
+                                <l>return window.patrulinows.leia()</l>
+                            </block>
+                            <list></list>
+                        </block>
+                    </block>
+                </script>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list></list>
+                            <l>alert("PatruLINO DESCONECTATO :-(")</l>
+                        </block>
+                        <list></list>
+                    </block>
+                    <block s="doStopThis">
+                        <l>
+                            <option>all</option>
+                        </l>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+</blocks>

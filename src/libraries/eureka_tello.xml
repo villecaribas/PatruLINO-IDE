@@ -1,0 +1,410 @@
+<blocks app="Snap! 7, https://snap.berkeley.edu" version="2">
+    <palette>
+        <category name="EUREKA Tello" color="253,77,3,1"/>
+    </palette>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl CONECTAR %&apos;ip&apos;" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%s">localhost</input>
+        </inputs>
+        <script>
+            <block s="doIf">
+                <block s="reportNot">
+                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br TelloCONECTADO?"></custom-block>
+                </block>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list>
+                                <l>ip</l>
+                            </list>
+                            <l>window.tellolinows = (function () {&#xD;&#xD;    var url = "ws://" + ip + "/ws";&#xD;    var statusCon = false;&#xD;    var ws = statusCon ? ws : new WebSocket(url);&#xD;    var res = "";&#xD;&#xD;    ws.onopen = function (evt) {&#xD;        console.log("Conexao aberta ...");&#xD;        statusCon = true;&#xD;    };&#xD;&#xD;    ws.onmessage = function (evt) {&#xD;        console.log("Dado recebido ... :" + evt.data);&#xD;        res = evt.data;&#xD;    };&#xD;&#xD;    ws.onclose = function (evt) {&#xD;        console.log("Connection closed.");&#xD;        statusCon = false;&#xD;    };&#xD;&#xD;    return {&#xD;        //Metodos e variaveis PUBLICAS&#xD;        enviar: function (msg) {&#xD;            console.log("--&gt; " + msg);&#xD;            if (statusCon) {&#xD;                ws.send(msg);&#xD;            }&#xD;        },&#xD;&#xD;        opened: function () {&#xD;            console.log("Conexao esta: " + statusCon);&#xD;            return statusCon;&#xD;        },&#xD;&#xD;        leia: function () {&#xD;            return res;&#xD;        },&#xD;&#xD;        fechar: function () {&#xD;            statusCon = false;&#xD;            ws.close();&#xD;        }&#xD;&#xD;    };&#xD;})();&#xD;&#xD;//return window.tellolinows.opened();&#xD;</l>
+                        </block>
+                        <list>
+                            <block var="ip"/>
+                        </list>
+                    </block>
+                    <block s="doWaitUntil">
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br TelloCONECTADO?"></custom-block>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl TelloCONECTADO?" type="predicate" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doReport">
+                <block s="evaluate">
+                    <block s="reportJSFunction">
+                        <list></list>
+                        <l>if (typeof window.tellolinows === "undefined"){&#xD;    return false&#xD;}else{&#xD;    return window.tellolinows.opened()&#xD;}</l>
+                    </block>
+                    <list></list>
+                </block>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl Desconectar" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doRun">
+                <block s="reportJSFunction">
+                    <list>
+                        <l></l>
+                    </list>
+                    <l>window.tellolinows.fechar()</l>
+                </block>
+                <list></list>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl enviar %&apos;mensagem&apos;" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%s"></input>
+        </inputs>
+        <script>
+            <block s="doIfElse">
+                <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br TelloCONECTADO?"></custom-block>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list>
+                                <l>mensagem</l>
+                            </list>
+                            <l>window.tellolinows.enviar(mensagem)</l>
+                        </block>
+                        <list>
+                            <block var="mensagem"/>
+                        </list>
+                    </block>
+                </script>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list></list>
+                            <l>alert("PatruLINO DESCONECTATO :-(")</l>
+                        </block>
+                        <list></list>
+                    </block>
+                    <block s="doStopThis">
+                        <l>
+                            <option>all</option>
+                        </l>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl decolar $cloud" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                <l>takeoff</l>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl aterrisar $globeBig" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                <l>land</l>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl girar $turnRight %&apos;graus&apos;" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">90</input>
+        </inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>cw </l>
+                        <block var="graus"/>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl girar $turnLeft %&apos;graus&apos;" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%n">90</input>
+        </inputs>
+        <script>
+            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                <block s="reportJoinWords">
+                    <list>
+                        <l>ccw </l>
+                        <block var="graus"/>
+                    </list>
+                </block>
+            </custom-block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl para %&apos;direcao&apos; %&apos;distancia&apos; cm" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%txt">frente<options>frente&#xD;traz&#xD;cima&#xD;baixo&#xD;direita&#xD;esquerda</options></input>
+            <input type="%n">50</input>
+        </inputs>
+        <script>
+            <block s="doIfElse">
+                <block s="reportEquals">
+                    <block var="direcao"/>
+                    <l>frente</l>
+                </block>
+                <script>
+                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                        <block s="reportJoinWords">
+                            <list>
+                                <l>forward </l>
+                                <block var="distancia"/>
+                            </list>
+                        </block>
+                    </custom-block>
+                </script>
+                <script>
+                    <block s="doIfElse">
+                        <block s="reportEquals">
+                            <block var="direcao"/>
+                            <l>traz</l>
+                        </block>
+                        <script>
+                            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                                <block s="reportJoinWords">
+                                    <list>
+                                        <l>back </l>
+                                        <block var="distancia"/>
+                                    </list>
+                                </block>
+                            </custom-block>
+                        </script>
+                        <script>
+                            <block s="doIfElse">
+                                <block s="reportEquals">
+                                    <block var="direcao"/>
+                                    <l>cima</l>
+                                </block>
+                                <script>
+                                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                                        <block s="reportJoinWords">
+                                            <list>
+                                                <l>up </l>
+                                                <block var="distancia"/>
+                                            </list>
+                                        </block>
+                                    </custom-block>
+                                </script>
+                                <script>
+                                    <block s="doIfElse">
+                                        <block s="reportEquals">
+                                            <block var="direcao"/>
+                                            <l>baixo</l>
+                                        </block>
+                                        <script>
+                                            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                                                <block s="reportJoinWords">
+                                                    <list>
+                                                        <l>down </l>
+                                                        <block var="distancia"/>
+                                                    </list>
+                                                </block>
+                                            </custom-block>
+                                        </script>
+                                        <script>
+                                            <block s="doIfElse">
+                                                <block s="reportEquals">
+                                                    <block var="direcao"/>
+                                                    <l>direita</l>
+                                                </block>
+                                                <script>
+                                                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                                                        <block s="reportJoinWords">
+                                                            <list>
+                                                                <l>right </l>
+                                                                <block var="distancia"/>
+                                                            </list>
+                                                        </block>
+                                                    </custom-block>
+                                                </script>
+                                                <script>
+                                                    <block s="doIf">
+                                                        <block s="reportEquals">
+                                                            <block var="direcao"/>
+                                                            <l>esquerda</l>
+                                                        </block>
+                                                        <script>
+                                                            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                                                                <block s="reportJoinWords">
+                                                                    <list>
+                                                                        <l>left </l>
+                                                                        <block var="distancia"/>
+                                                                    </list>
+                                                                </block>
+                                                            </custom-block>
+                                                        </script>
+                                                    </block>
+                                                </script>
+                                            </block>
+                                        </script>
+                                    </block>
+                                </script>
+                            </block>
+                        </script>
+                    </block>
+                </script>
+            </block>
+            <block s="doWaitUntil">
+                <block s="reportEquals">
+                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br Recebido"></custom-block>
+                    <l>ok</l>
+                </block>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl flip para: %&apos;para&apos;" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%txt">frente<options>frente&#xD;traz&#xD;esquerda&#xD;direita</options></input>
+        </inputs>
+        <script>
+            <block s="doIfElse">
+                <block s="reportEquals">
+                    <block var="para"/>
+                    <l>frente</l>
+                </block>
+                <script>
+                    <block s="errorObsolete"></block>
+                </script>
+                <script>
+                    <block s="doIfElse">
+                        <block s="reportEquals">
+                            <block var="para"/>
+                            <l>traz</l>
+                        </block>
+                        <script>
+                            <block s="errorObsolete"></block>
+                        </script>
+                        <script>
+                            <block s="doIfElse">
+                                <block s="reportEquals">
+                                    <block var="para"/>
+                                    <l>esquerda</l>
+                                </block>
+                                <script>
+                                    <block s="errorObsolete"></block>
+                                </script>
+                                <script>
+                                    <block s="doIf">
+                                        <block s="reportEquals">
+                                            <block var="para"/>
+                                            <l>direita</l>
+                                        </block>
+                                        <script>
+                                            <block s="errorObsolete"></block>
+                                        </script>
+                                    </block>
+                                </script>
+                            </block>
+                        </script>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl Recebido" type="reporter" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doIfElse">
+                <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br TelloCONECTADO?"></custom-block>
+                <script>
+                    <block s="doReport">
+                        <block s="evaluate">
+                            <block s="reportJSFunction">
+                                <list></list>
+                                <l>return window.tellolinows.leia()</l>
+                            </block>
+                            <list></list>
+                        </block>
+                    </block>
+                </script>
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list></list>
+                            <l>alert("Tello Servidor DESCONECTATO :-(")</l>
+                        </block>
+                        <list></list>
+                    </block>
+                    <block s="doStopThis">
+                        <l>
+                            <option>all</option>
+                        </l>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 $nl Video %&apos;liga&apos;" type="command" category="EUREKA Tello">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%b">false</input>
+        </inputs>
+        <script>
+            <block s="doIfElse">
+                <block var="liga"/>
+                <script>
+                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                        <block s="reportJoinWords">
+                            <list>
+                                <l>streamon</l>
+                            </list>
+                        </block>
+                    </custom-block>
+                </script>
+                <script>
+                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Tello-0.681 %br enviar %s">
+                        <block s="reportJoinWords">
+                            <list>
+                                <l>streamoff</l>
+                            </list>
+                        </block>
+                    </custom-block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+</blocks>

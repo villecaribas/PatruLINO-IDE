@@ -1,0 +1,190 @@
+<blocks app="Snap! 7, https://snap.berkeley.edu" version="2">
+    <palette>
+        <category name="EUREKA UTILS" color="250,138,20,1"/>
+    </palette>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Utils-0.681 $nl Soletrar início: %&apos;inicio&apos; soletrar: %&apos;frase&apos; intervalos entre digitos: %&apos;tempo&apos;" type="command" category="EUREKA UTILS">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%txt">Sempre</input>
+            <input type="%txt">rumo ao tesouro de Bresa!!</input>
+            <input type="%n">0.02</input>
+        </inputs>
+        <script>
+            <block s="doDeclareVariables">
+                <list>
+                    <l>a</l>
+                </list>
+            </block>
+            <block s="doSetVar">
+                <l>a</l>
+                <block var="inicio"/>
+            </block>
+            <block s="doFor">
+                <l>i</l>
+                <l>1</l>
+                <block s="reportStringSize">
+                    <block var="frase"/>
+                </block>
+                <script>
+                    <block s="doWarp">
+                        <script>
+                            <block s="doSetVar">
+                                <l>a</l>
+                                <block s="reportJoinWords">
+                                    <list>
+                                        <block var="a"/>
+                                        <block s="reportLetter">
+                                            <block var="i"/>
+                                            <block var="frase"/>
+                                        </block>
+                                    </list>
+                                </block>
+                            </block>
+                            <block s="bubble">
+                                <block var="a"/>
+                            </block>
+                        </script>
+                    </block>
+                    <block s="doWait">
+                        <block var="tempo"/>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Utils-0.681 $nl Restringir valores %&apos;value&apos; entre %&apos;val1&apos; e %&apos;val2&apos;" type="reporter" category="EUREKA UTILS">
+        <header></header>
+        <code></code>
+        <translations>ca:constreny _ entre _ i _&#xD;es:constreñir _ entre _ y _&#xD;</translations>
+        <inputs>
+            <input type="%n"></input>
+            <input type="%n"></input>
+            <input type="%n"></input>
+        </inputs>
+        <script>
+            <block s="doDeclareVariables">
+                <list>
+                    <l>min</l>
+                    <l>max</l>
+                </list>
+            </block>
+            <block s="doIfElse">
+                <block s="reportLessThan">
+                    <block var="val1"/>
+                    <block var="val2"/>
+                </block>
+                <script>
+                    <block s="doSetVar">
+                        <l>min</l>
+                        <block var="val1"/>
+                    </block>
+                    <block s="doSetVar">
+                        <l>max</l>
+                        <block var="val2"/>
+                    </block>
+                </script>
+                <script>
+                    <block s="doSetVar">
+                        <l>min</l>
+                        <block var="val2"/>
+                    </block>
+                    <block s="doSetVar">
+                        <l>max</l>
+                        <block var="val1"/>
+                    </block>
+                </script>
+            </block>
+            <block s="doIfElse">
+                <block s="reportLessThan">
+                    <block var="value"/>
+                    <block var="min"/>
+                </block>
+                <script>
+                    <block s="doReport">
+                        <block var="min"/>
+                    </block>
+                </script>
+                <script>
+                    <block s="doIfElse">
+                        <block s="reportGreaterThan">
+                            <block var="value"/>
+                            <block var="max"/>
+                        </block>
+                        <script>
+                            <block s="doReport">
+                                <block var="max"/>
+                            </block>
+                        </script>
+                        <script>
+                            <block s="doReport">
+                                <block var="value"/>
+                            </block>
+                        </script>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Utils-0.681 $nl mapeia %&apos;value&apos; de [ %&apos;min&apos; , %&apos;max&apos; ] para [ %&apos;newMin&apos; , %&apos;newMax&apos; ]" type="reporter" category="EUREKA UTILS">
+        <header></header>
+        <code></code>
+        <translations>ca:escala _ des de [ _ , _ ] fins [ _ , _ ]&#xD;es:escala _ desde [ _ , _ ] hasta [ _ , _ ]&#xD;</translations>
+        <inputs>
+            <input type="%n"></input>
+            <input type="%n"></input>
+            <input type="%n"></input>
+            <input type="%n"></input>
+            <input type="%n"></input>
+        </inputs>
+        <script>
+            <block s="doReport">
+                <block s="reportVariadicSum">
+                    <list>
+                        <block s="reportVariadicProduct">
+                            <list>
+                                <block s="reportDifference">
+                                    <block var="value"/>
+                                    <block var="min"/>
+                                </block>
+                                <block s="reportQuotient">
+                                    <block s="reportDifference">
+                                        <block var="newMax"/>
+                                        <block var="newMin"/>
+                                    </block>
+                                    <block s="reportDifference">
+                                        <block var="max"/>
+                                        <block var="min"/>
+                                    </block>
+                                </block>
+                            </list>
+                        </block>
+                        <block var="newMin"/>
+                    </list>
+                </block>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $Utils-0.681 $nl Editor de fantasias %&apos;cst&apos;" type="command" category="EUREKA UTILS">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%s" readonly="true"><options>§_costumesMenu</options></input>
+        </inputs>
+        <script>
+            <block s="doRun">
+                <block s="reportJSFunction">
+                    <list>
+                        <l>cst</l>
+                    </list>
+                    <l>if(document.getElementById("painter")){ document.getElementById("painter").remove()}&#xD;&#xD;var dialog = document.createElement( "dialog");&#xD;dialog.setAttribute( "id", "painter");&#xD;dialog.setAttribute( "style", "top:5%; width:60vw; height:90vh; border-style:solid; border-radius:0.5em; background-color:lightgray; padding:3px; text-align: center;");&#xD;dialog.innerHTML = &apos;\&#xD;    &lt;div style="height:30px; background-color:#FA8F14"&gt;Editor de fantasias baseado no: &lt;a href="https://github.com/LLK/scratch-paint" target=_blank&gt;scratch paint&lt;/a&gt;&lt;/div&gt;\&#xD;    &lt;div style="height:92%"&gt;\&#xD;      &lt;iframe id="frm_editor" style="width:100%; height:100%; background-color:white"&gt;&lt;/iframe&gt;&lt;br&gt;\&#xD;    &lt;/div&gt;\&#xD;    &lt;div style="height:20px; padding:5px"&gt;\&#xD;      &lt;button id="OK" type="button" value="default"&gt;OK&lt;/button&gt;\&#xD;		    &lt;button id="cancel" type="button" value="cancel"&gt;Cancel&lt;/button&gt;\&#xD;    &lt;/div&gt;\&#xD;&apos;;&#xD;document.body.appendChild( dialog);&#xD;&#xD;var iframe = document.getElementById( "frm_editor");&#xD;//iframe.setAttribute("style", "width:60%; height:90%; background-color:darkgray");&#xD;iframe.srcdoc = &apos;&lt;script src="https://dardoro.github.io/costume-editor/costume-editor.js" defer&gt;&lt;/script&gt;&lt;div id="paint-div"&gt;&lt;/div&gt;&apos;;&#xD;&#xD;// Events&#xD;dialog.addEventListener( "cancel", ()=&gt;{ dialog.close();});&#xD;document.getElementById( "OK").addEventListener( "click", () =&gt;{&#xD;  dialog.close();&#xD; 	document.getElementById("painter").remove();&#xD;});&#xD;document.getElementById( "painter").addEventListener( "click", () =&gt;{&#xD;	dialog.close();&#xD; 	document.getElementById("painter").remove();&#xD;});&#xD;&#xD;dialog.show();</l>
+                </block>
+                <list>
+                    <block var="cst"/>
+                </list>
+            </block>
+        </script>
+    </block-definition>
+</blocks>

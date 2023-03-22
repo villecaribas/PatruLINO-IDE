@@ -1,0 +1,294 @@
+<blocks app="Snap! 7, https://snap.berkeley.edu" version="2">
+    <palette>
+        <category name="EUREKA WebSocket" color="16,179,0,1"/>
+    </palette>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl criar conexao %&apos;ip&apos;" type="reporter" category="EUREKA WebSocket">
+        <variables>
+            <list struct="atomic" id="3">a</list>
+        </variables>
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%s">192.168.100.86</input>
+        </inputs>
+        <script>
+            <block s="doWarp">
+                <script>
+                    <block s="doSetVar">
+                        <l>a</l>
+                        <block s="evaluate">
+                            <block s="reportJSFunction">
+                                <list>
+                                    <l>ip</l>
+                                </list>
+                                <l>if (typeof window.eurekawss === "undefined"){&#xD;    window.eurekawss = [];&#xD;}&#xD;&#xD;var CONEXAO = (function () {&#xD;&#xD;    var url = "ws://" + ip + "/ws";&#xD;    var statusCon = false;&#xD;    var ws = statusCon ? ws : new WebSocket(url);&#xD;    var res = "";&#xD;    var lido = false;&#xD;&#xD;    ws.onopen = function (evt) {&#xD;        console.log("Conexao aberta ...");&#xD;        statusCon = true;&#xD;    };&#xD;&#xD;    ws.onmessage = function (evt) {&#xD;        console.log("Dado recebido ... :" + evt.data);&#xD;        res = evt.data;&#xD;    };&#xD;&#xD;    ws.onclose = function (evt) {&#xD;        console.log("Connection closed.");&#xD;        statusCon = false;&#xD;    };&#xD;&#xD;    return {&#xD;        //Metodos e variaveis PUBLICAS&#xD;        enviar: function (msg) {&#xD;            console.log("--&gt; " + msg);&#xD;            if (statusCon) {&#xD;                ws.send(msg);&#xD;            }&#xD;        },&#xD;&#xD;        opened: function () {&#xD;            console.log("Conexao esta: "+statusCon);&#xD;            return statusCon;&#xD;        },&#xD;&#xD;        esvaziaBuffer: function(){ &#xD;            res = null;&#xD;        },&#xD;&#xD;        leia: function () {&#xD;               return res;&#xD;        },&#xD;&#xD;        fechar: function () {&#xD;            statusCon = false;&#xD;            ws.close();&#xD;        }&#xD;&#xD;    };&#xD;})();&#xD;&#xD;window.eurekawss.push(CONEXAO)&#xD;&#xD;return CONEXAO;&#xD;</l>
+                            </block>
+                            <list>
+                                <block var="ip"/>
+                            </list>
+                        </block>
+                    </block>
+                    <block s="doWaitUntil">
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br conectado %obj ?">
+                            <block var="a"/>
+                        </custom-block>
+                    </block>
+                    <block s="doReport">
+                        <block var="a"/>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl conectado %&apos;conexao&apos; ?" type="predicate" category="EUREKA WebSocket">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%obj">192.168.100.86</input>
+        </inputs>
+        <script>
+            <block s="doWarp">
+                <script>
+                    <block s="doReport">
+                        <block s="evaluate">
+                            <block s="reportJSFunction">
+                                <list>
+                                    <l>conexao</l>
+                                </list>
+                                <l>if (typeof conexao == "undefined"){&#xD;    return false&#xD;}else{&#xD;    return conexao.opened()&#xD;}</l>
+                            </block>
+                            <list>
+                                <block var="conexao"/>
+                            </list>
+                        </block>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl desconectar conexao: %&apos;conexao&apos;" type="command" category="EUREKA WebSocket">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%s"></input>
+        </inputs>
+        <script>
+            <block s="doWarp">
+                <script>
+                    <block s="doIf">
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br conectado %obj ?">
+                            <block var="conexao"/>
+                        </custom-block>
+                        <script>
+                            <block s="doRun">
+                                <block s="reportJSFunction">
+                                    <list>
+                                        <l>conexao</l>
+                                    </list>
+                                    <l>conexao.fechar()</l>
+                                </block>
+                                <list>
+                                    <block var="conexao"/>
+                                </list>
+                            </block>
+                        </script>
+                    </block>
+                    <block s="doSetVar">
+                        <l>conexao</l>
+                        <block s="evaluate">
+                            <block s="reportJSFunction">
+                                <list></list>
+                                <l>return null;</l>
+                            </block>
+                            <list></list>
+                        </block>
+                    </block>
+                    <block s="doDeleteFromList">
+                        <block s="reportListIndex">
+                            <block var="conexao"/>
+                            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br lista de conexoes"></custom-block>
+                        </block>
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br lista de conexoes"></custom-block>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl enviar para: %&apos;conexao&apos; mensagem: %&apos;mensagem&apos;" type="command" category="EUREKA WebSocket">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%obj"></input>
+            <input type="%s"></input>
+        </inputs>
+        <script>
+            <block s="doWarp">
+                <script>
+                    <block s="doIfElse">
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br conectado %obj ?">
+                            <block var="conexao"/>
+                        </custom-block>
+                        <script>
+                            <block s="doRun">
+                                <block s="reportJSFunction">
+                                    <list>
+                                        <l>conexao</l>
+                                        <l>mensagem</l>
+                                    </list>
+                                    <l>conexao.enviar(mensagem)</l>
+                                </block>
+                                <list>
+                                    <block var="conexao"/>
+                                    <block var="mensagem"/>
+                                </list>
+                            </block>
+                        </script>
+                        <script>
+                            <block s="doRun">
+                                <block s="reportJSFunction">
+                                    <list></list>
+                                    <l>alert("PatruLINO DESCONECTATO :-(")</l>
+                                </block>
+                                <list></list>
+                            </block>
+                            <block s="doStopThis">
+                                <l>
+                                    <option>all</option>
+                                </l>
+                            </block>
+                        </script>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl recebido de: %&apos;conexao&apos;" type="reporter" category="EUREKA WebSocket">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%obj"></input>
+        </inputs>
+        <script>
+            <block s="doWarp">
+                <script>
+                    <block s="doIfElse">
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br conectado %obj ?">
+                            <block var="conexao"/>
+                        </custom-block>
+                        <script>
+                            <block s="doReport">
+                                <block s="evaluate">
+                                    <block s="reportJSFunction">
+                                        <list>
+                                            <l>conexao</l>
+                                        </list>
+                                        <l>return conexao.leia()</l>
+                                    </block>
+                                    <list>
+                                        <block var="conexao"/>
+                                    </list>
+                                </block>
+                            </block>
+                        </script>
+                        <script>
+                            <block s="doRun">
+                                <block s="reportJSFunction">
+                                    <list></list>
+                                    <l>alert("PatruLINO DESCONECTATO :-(")</l>
+                                </block>
+                                <list></list>
+                            </block>
+                            <block s="doStopThis">
+                                <l>
+                                    <option>all</option>
+                                </l>
+                            </block>
+                        </script>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl lista de conexoes" type="reporter" category="EUREKA WebSocket">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doReport">
+                <block s="evaluate">
+                    <block s="reportJSFunction">
+                        <list>
+                            <l>ip</l>
+                        </list>
+                        <l>return new List(window.eurekawss)</l>
+                    </block>
+                    <list></list>
+                </block>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl desconectar tudo" type="command" category="EUREKA WebSocket">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs></inputs>
+        <script>
+            <block s="doForEach">
+                <l>item</l>
+                <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br lista de conexoes"></custom-block>
+                <script>
+                    <block s="doIfElse">
+                        <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br conectado %obj ?">
+                            <block var="item"/>
+                        </custom-block>
+                        <script>
+                            <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br desconectar conexao: %s">
+                                <block var="item"/>
+                            </custom-block>
+                        </script>
+                        <script>
+                            <block s="doDeleteFromList">
+                                <block s="reportListIndex">
+                                    <block var="item"/>
+                                    <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br lista de conexoes"></custom-block>
+                                </block>
+                                <custom-block s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 %br lista de conexoes"></custom-block>
+                            </block>
+                        </script>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+    <block-definition s="$Patrulha-0.618-81-157-214 $EU-0.618-255-214-0 $RE-0.618-214-36-8 $KA-0.618-78-190-69 $.org-0.618-0-0-0 $:-0.681 $WebSocket-0.681 $nl esvaziarBuffer %&apos;conexao&apos;" type="command" category="EUREKA WebSocket">
+        <header></header>
+        <code></code>
+        <translations></translations>
+        <inputs>
+            <input type="%obj"></input>
+        </inputs>
+        <script>
+            <block s="doWarp">
+                <script>
+                    <block s="doRun">
+                        <block s="reportJSFunction">
+                            <list>
+                                <l>conexao</l>
+                            </list>
+                            <l>return conexao.esvaziaBuffer()</l>
+                        </block>
+                        <list>
+                            <block var="conexao"/>
+                        </list>
+                    </block>
+                </script>
+            </block>
+        </script>
+    </block-definition>
+</blocks>
