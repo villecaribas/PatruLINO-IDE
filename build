@@ -117,7 +117,8 @@ build() {
 
         echo "Fetching Snap4Arduino libraries..."
         cp -R src/libraries/*.xml tmp/libraries
-        cat src/libraries/LIBRARIES >> tmp/libraries/LIBRARIES
+        cat tmp/libraries/LIBRARIES >> src/libraries/LIBRARIES
+        cat src/libraries/LIBRARIES > tmp/libraries/LIBRARIES
 
         echo "Fetching Snap4Arduino Costumes..."
         cp -R src/Costumes/*.png tmp/Costumes
