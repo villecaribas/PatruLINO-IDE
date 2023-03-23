@@ -3,3 +3,4 @@ environments/*
 tmp
 releases/*
 .DS_Store
+src/snap

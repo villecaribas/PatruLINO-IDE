@@ -102,6 +102,9 @@ build() {
         echo
         rm -rf tmp
 
+        echo "PatruLINO configurações..."
+        cp PatruLINO/* src/snap/src
+
         echo "Fetching Snap! sources..."
         if ! cp -R src/snap tmp; then
             print_error "Could not find Snap! sources.\nPlease run prepare --snap first."
@@ -186,11 +189,13 @@ run() {
             exit 1           
         fi
     elif test "$platform" = "desktop/gnu/64" || test `arch` = "x86_64" > /dev/null; then
+        rm -rf ~/.config/Snap4Arduino/ ~/.cache/Snap4Arduino/
         if ! releases/desktop/gnu/64/run; then
             print_error "Failed to run Snap4Arduino for x86_64. System reported this is an `arch` machine.\nMake sure Snap4Arduino has been built first.\nSee build --help for details."
             exit 1
         fi
     elif test "$platform" = "desktop/gnu/32" || test `arch` = "i386" > /dev/null; then
+        rm -rf ~/.config/Snap4Arduino/ ~/.cache/Snap4Arduino/
         if ! releases/desktop/gnu/32/run; then
             print_error "Failed to run Snap4Arduino for i386. System reported this is an `arch` machine.\nMake sure Snap4Arduino has been built first.\nSee build --help for details."
             exit 1
