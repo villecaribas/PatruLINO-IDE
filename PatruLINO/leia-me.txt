@@ -1,0 +1,10 @@
+Para compilação do Win/64
+
+$ sudo apt-get install node npm sed zip unzip git wget
+$ ./prepare --all
+$ ./prepare --inno
+$ cd environments
+$ npm uninstall nw-builder
+$ npm install nw-builder@3.5.7
+$ cd ..
+$ ./build --platform=desktop/win/64 --makeinstaller
